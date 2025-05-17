@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.util.HashMap;
 
 public class Client {
-
     public void start() throws Exception {
         String filepath = "src/clientdata.txt";
         String publicKeyPath = "public.key";
@@ -26,7 +25,7 @@ public class Client {
         IvParameterSpec iv = AES.generateIV();
         byte[] encryptedData = AES.encrypt(fileBytes, AESKey, iv);
 
-        byte[] publicKeyBytes = Files.readAllBytes(new File(publicKeyPath).toPath());
+        byte[] publicKeyBytes = java.util.Base64.getDecoder().decode(Files.readString(new File(publicKeyPath).toPath()));
         PublicKey serverPublicKey = RSA.getPublicKeyFromBytes(publicKeyBytes);
         byte[] encryptedAESKey = RSA.encrypt(serverPublicKey, AESKey.getEncoded());
 

@@ -1,6 +1,7 @@
 package server;
 
 import crypto.AES;
+import crypto.Keys;
 import crypto.RSA;
 import crypto.HashUtils;
 
@@ -17,13 +18,12 @@ public class server {
 
     private static final int PORT = 8080;
     private static final String PUBLIC_KEY_FILE = "public.key";
-    
+    private static final String PRIVATE_KEY_FILE = "private.key";
 
     public void start() {
         try {
-            // Gjeneron qelsin RSA
-            KeyPair keyPair = RSA.generateKeyPair();
-            savePublicKey(keyPair.getPublic());
+            // Gjeneron celesat
+            KeyPair keyPair = Keys.getKeyPair(PUBLIC_KEY_FILE, PRIVATE_KEY_FILE);
 
             // Fillon serveri
             ServerSocket serverSocket = new ServerSocket(PORT);
@@ -37,15 +37,6 @@ public class server {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private void savePublicKey(PublicKey publicKey) throws IOException {
-        byte[] keyBytes = RSA.getPublicKeyBytes(publicKey);
-        String base64Key = java.util.Base64.getEncoder().encodeToString(keyBytes);
-
-        try (FileWriter writer = new FileWriter(PUBLIC_KEY_FILE)) {
-            writer.write(base64Key);
         }
     }
 

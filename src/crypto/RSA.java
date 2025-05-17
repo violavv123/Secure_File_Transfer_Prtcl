@@ -35,4 +35,10 @@ public class RSA {
         KeyFactory kf = KeyFactory.getInstance(RSA_ALGO);
         return kf.generatePublic(spec);
     }
+
+    public static PrivateKey getPrivateKeyFromBytes(byte[] keyBytes) throws Exception {
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory kf = KeyFactory.getInstance(RSA_ALGO);
+        return kf.generatePrivate(spec);
+    }
 }
