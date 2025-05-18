@@ -26,10 +26,6 @@ public class RSA {
         return cipher.doFinal(encryptedData);
     }
 
-    public static byte[] getPublicKeyBytes(PublicKey publicKey) {
-        return publicKey.getEncoded();
-    }
-
     public static PublicKey getPublicKeyFromBytes(byte[] keyBytes) throws Exception {
         X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
         KeyFactory kf = KeyFactory.getInstance(RSA_ALGO);
