@@ -6,10 +6,11 @@
 3. [Kërkesat](#kërkesat)
 4. [Instalimi](#instalimi)
 5. [Përdorimi](#përdorimi)
-6. [Implementimi i Sigurisë](#implementimi-i-sigurisë)
-7. [Struktura e Projektit](#struktura-e-projektit)
-8. [Shënime të Rëndësishme](#shënime-të-rëndësishme)
-9. [Licenca](#licenca)
+6. [Rezultatet](#rezultatet)
+7. [Implementimi i Sigurisë](#implementimi-i-sigurisë)
+8. [Struktura e Projektit](#struktura-e-projektit)
+
+
 
 ## Përshkrimi <a name="përshkrimi"></a>
 Ky është një sistem për transferimin e sigurt të skedarëve duke përdorur kriptografi hibride (AES + RSA) me komponentët e mëposhtëm:
@@ -43,6 +44,29 @@ Ky është një sistem për transferimin e sigurt të skedarëve duke përdorur 
 openssl genrsa -out private.key 2048
 openssl rsa -in private.key -pubout -out public.key
 ```
+## Përdorimi <a name="përdorimi"></a>
+### Udhezimet e Ekzekutimit 
+
+1. Nisni serverin (në terminal të veçantë):
+```bash
+java -cp target/sftp.jar server.Server
+``` 
+2.Nisni klientin (në terminal të veçantë):
+```bash
+java -cp target/sftp.jar client.Client
+```
+
+## rezultatet 
+### Në Server:
+[INFO] Serveri u nis në portin 8080
+[INFO] Lidhje e re nga klienti: 127.0.0.1
+[SUKSES] Skedari u pranua dhe u verifikua
+ 
+### Në Klient:
+[STATUS] U lidh me serverin
+[ENKRIPTIM] Skedari u enkriptua me sukses
+[TRANSFERIM] Skedari u dërgua (100%)
+[SUKSES] Transferimi u krye
 
 ## Implementimi i Sigurisë
 
