@@ -1,58 +1,75 @@
-# Secure_File_Transfer_Prtcl
-Faza e trete ne lenden Siguria e te Dhenave per grupin 15 (Secure File Transfer Protocol using Hybrid Cryptography
-Ky projekt në Java ofron funksionalitete bazë për kriptografi duke përdorur bibliotekat standarde si `javax.crypto` dhe `java.security`. Përfshin module për enkriptim AES, enkriptim RSA dhe funksione hash-uese.
+# Protokoll i Sigurt për Transferimin e Skedarëve (SFTP) - Implementim në Java
 
----
+## Përmbajtja
+1. [Përshkrimi](#përshkrimi)
+2. [Veçoritë](#veçoritë)
+3. [Kërkesat](#kërkesat)
+4. [Instalimi](#instalimi)
+5. [Përdorimi](#përdorimi)
+6. [Implementimi i Sigurisë](#implementimi-i-sigurisë)
+7. [Struktura e Projektit](#struktura-e-projektit)
+8. [Shënime të Rëndësishme](#shënime-të-rëndësishme)
+9. [Licenca](#licenca)
 
-## 📁 Struktura e Projektit
+## Përshkrimi <a name="përshkrimi"></a>
+Ky është një sistem për transferimin e sigurt të skedarëve duke përdorur kriptografi hibride (AES + RSA) me komponentët e mëposhtëm:
+- Aplikacion klient për transferim të sigurt të skedarëve
+- Aplikacion server për pranim dhe verifikim të skedarëve
+- Mjete kriptografike për enkriptim dhe verifikim
 
+## Veçoritë <a name="veçoritë"></a>
 
----
+### Aplikacioni Klient
+- Enkriptim i skedarëve me AES-256
+- Shkëmbim çelësash me RSA-2048
+- Verifikim integriteti me SHA-256
+- Ndërfaqe e thjeshtë përmes komandave
 
-## 🔐 Karakteristikat
+### Aplikacioni Server
+- Dekriptim i sigurt i skedarëve
+- Verifikim i integritetit
+- Mbështetje për lidhje të shumta njëkohësisht
+- Menaxhim i sigurt i çelësave
 
-### AES (Advanced Encryption Standard)
-- Gjenerim i çelësit AES (256-bit)
-- Gjenerim i IV (Initialization Vector)
-- Enkriptim dhe dekriptim me `AES/CBC/PKCS5Padding`
+## Kërkesat <a name="kërkesat"></a>
+- Java JDK 11 ose më e lartë
+- Maven (për ndërtim)
+- OpenSSL (për gjenerimin e çelësave)
 
-### RSA (Rivest-Shamir-Adleman)
-- Gjenerim i palës së çelësave RSA (2048-bit)
-- Enkriptim dhe dekriptim me `OAEPWithSHA-256AndMGF1Padding`
-- Konvertim midis byte array dhe çelësave publik RSA
+## Instalimi <a name="instalimi"></a>
 
-### HashUtils
-- Gjenerim i hash-it SHA-256 për:
-    - Stringje
-    - Skedarë
-- Verifikim i hash-it të skedarëve
-- Output në format hexadecimal
+1. Gjeneroni çelësat RSA:
+```bash
+openssl genrsa -out private.key 2048
+openssl rsa -in private.key -pubout -out public.key
+```
 
----
+## Implementimi i Sigurisë
 
-## ✅ Kërkesat
+Përdorimi i teknologjive të sigurisë në këtë projekt:
 
-- Java 8 ose më i ri
-- Nuk ka nevojë për biblioteka të jashtme
+1. **Enkriptimi i të Dhënave**
+   - Teknologjia: AES-256
+   - Implementimi: Përdor modalitetin CBC me IV
 
----
+2. **Shkëmbimi i Çelësave** 
+   - Teknologjia: RSA-2048
+   - Implementimi: Përdor mbushjen PKCS1
 
-## 🛠 Shembuj Përdorimi
+3. **Verifikimi i Integritetit**
+   - Teknologjia: SHA-256
+   - Implementimi: Gjeneron hash për verifikim të skedarëve
 
-### Shembull AES
+## Struktura e projektit
 
-```java
-SecretKey key = AES.generateAESKey();
-IvParameterSpec iv = AES.generateIV();
-byte[] encrypted = AES.encrypt("Përshëndetje".getBytes(), key, iv);
-byte[] decrypted = AES.decrypt(encrypted, key, iv);
+Sistemi i organizimit të fajllave:
 
-
-## Shembull RSA 
-KeyPair keyPair = RSA.generateKeyPair();
-byte[] encrypted = RSA.encrypt(keyPair.getPublic(), "Sekret".getBytes());
-byte[] decrypted = RSA.decrypt(keyPair.getPrivate(), encrypted);
-
-## Shembull Hash
-String hash = HashUtils.generateStringHash("disa të dhëna");
+- Dosja kryesore `src` përmban:
+  - Nënpërkatësin `main` me:
+    - Kodet Java në dosjen `java`:
+      - Implementimi i klientit në `client/Client.java`
+      - Implementimi i serverit në `server/Server.java`
+      - Bibliotekat kriptografike në `crypto/` (AES.java, RSA.java, HashUtils.java)
+    - Burimet në `resources/` (çelësat publik dhe privat)
+  - Testet në dosjen `test/`
 
